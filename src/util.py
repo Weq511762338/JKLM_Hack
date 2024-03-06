@@ -17,6 +17,7 @@ def find_word(syllable):
 def get_word():
     global possible_words
     return random.sample(possible_words, min(5, len(possible_words)))
+    # return possible_words[:3]
 
 if __name__ == '__main__':
     load_word_list()

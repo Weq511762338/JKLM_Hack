@@ -25,7 +25,7 @@ def prompt_word():
         prevSyllable = curSyllable
     pass
 
-keyboard.on_press_key("`", lambda _:read_syllable())
+keyboard.on_press_key("ctrl", lambda _:read_syllable())
 keyboard.on_press_key("esc", lambda _:quit())
 
 # load the whole word list
