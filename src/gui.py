@@ -1,14 +1,18 @@
 import wx
+import prompter
+import keyboard
 
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
-        super(MyFrame, self).__init__(parent, title=title, size=(300, 250))
+        super(MyFrame, self).__init__(parent, title=title, size=(250, 300), style=wx.DEFAULT_FRAME_STYLE | wx.STAY_ON_TOP)
+
+        self.SetIcon(wx.Icon('./img/prompter_icon.ico', wx.BITMAP_TYPE_ICO))  # Add application icon
 
         panel = wx.Panel(self)
         main_sizer = wx.BoxSizer(wx.VERTICAL)
 
         # Create a static box and a static box sizer
-        static_box = wx.StaticBox(panel, label='Displayed Text')
+        static_box = wx.StaticBox(panel, label='Possible Words:')
         static_box_sizer = wx.StaticBoxSizer(static_box, wx.VERTICAL)
 
         # Create a static text control
@@ -44,8 +48,7 @@ class MyFrame(wx.Frame):
         toggle_button1.Bind(wx.EVT_TOGGLEBUTTON, self.on_toggle_button)
         toggle_button2.Bind(wx.EVT_TOGGLEBUTTON, self.on_toggle_button)
         
-        # Example usage
-        self.words_to_display = ['sdagsdgasdgsgdsdgsggs', 'World', 'This', 'is', 'a', 'Test']
+        self.words_to_display = ['Welcome', 'to', 'JKLM_Prompter']
         self.display_words_in_rows(self.words_to_display)
 
     def on_toggle_button(self, event):
@@ -62,9 +65,30 @@ class MyFrame(wx.Frame):
         self.words_to_display = new_words
         self.display_words_in_rows(self.words_to_display)
 
+frame = None
+
+def prompt():
+    prompter.read_syllable()
+    words = prompter.prompt_word()
+    global frame
+    frame.update_displayed_text(words)
+
+def run():
+    global frame
+    # start gui
+    app = wx.App()
+    frame = MyFrame(None, "JKLM Prompter")
+
+    keyboard.on_press_key("shift", lambda _:prompt())
+    # keyboard.on_press_key("esc", lambda _:wx.Exit())
+
+    prompter.init()
+
+    frame.Show()
+    app.MainLoop()
+
 if __name__ == '__main__':
     app = wx.App()
     frame = MyFrame(None, "Display Words in Rows (Static Display with Buttons)")
     frame.Show()
     app.MainLoop()
-
