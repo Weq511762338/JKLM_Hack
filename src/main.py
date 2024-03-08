@@ -14,7 +14,7 @@ lock = threading.Lock()
 
 # modes
 auto_mode = False
-long_word_mode = True
+long_word_mode = False
 
 def quit():
     global terminate 
@@ -32,14 +32,17 @@ def read_syllable(lock):
     lock.release()
 
 def prompt_word():
-    global curSyllable, prevSyllable, long_word_mode
-    if prevSyllable is not curSyllable and len(util.possible_words) != 0:
-        words = util.get_word(long_word_mode)
-        # store the first word found to the clipboard so that user can directly paste
-        pyperclip.copy(words[0])
-        print(words)
-        prevSyllable = curSyllable
+    global long_word_mode
+    words = util.get_word(long_word_mode)
+    print(words)
+
+    # store the first word found to the clipboard so that user can directly paste
+    pyperclip.copy(words[0])
     pass
+
+def paste_word():
+    pyautogui.hotkey('ctrl', 'v')
+    pyautogui.hotkey('enter')
 
 keyboard.on_press_key("shift", lambda _:read_syllable(lock))
 keyboard.on_press_key("esc", lambda _:quit())
@@ -50,7 +53,11 @@ util.load_word_list()
 # main loop
 while not terminate:
     if not lock.locked():
-        prompt_word()
+        if prevSyllable is not curSyllable and len(util.possible_words) != 0:
+            prompt_word()
+            if auto_mode:
+                paste_word()
+            prevSyllable = curSyllable
 
 print("Program quitted successfully!")
 exit()
