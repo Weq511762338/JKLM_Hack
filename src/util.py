@@ -20,11 +20,3 @@ def get_word(long_word_mode):
         possible_words.sort(key=len)
         return possible_words[-min(5, len(possible_words)):]
     return random.sample(possible_words, min(5, len(possible_words)))
-
-if __name__ == '__main__':
-    load_word_list()
-
-    # print(word_list)
-    syl = input('enter syllable to query: ')
-    find_word(syl)
-    print(get_word())
