@@ -1,8 +1,8 @@
 import keyboard
 import pyautogui
 import pyperclip
-import util
 import threading
+import util
 
 # flag to terminate the program
 terminate = False
@@ -15,6 +15,8 @@ lock = threading.Lock()
 # modes
 auto_mode = False
 long_word_mode = False
+
+# --------------------------------------------------------------
 
 def quit():
     global terminate 
@@ -44,20 +46,23 @@ def paste_word():
     pyautogui.hotkey('ctrl', 'v')
     pyautogui.hotkey('enter')
 
-keyboard.on_press_key("shift", lambda _:read_syllable(lock))
-keyboard.on_press_key("esc", lambda _:quit())
+# --------------------------------------------------------------
 
-# load the whole word list
-util.load_word_list()
+if __name__ == '__main__':
+    keyboard.on_press_key("shift", lambda _:read_syllable(lock))
+    keyboard.on_press_key("esc", lambda _:quit())
 
-# main loop
-while not terminate:
-    if not lock.locked():
-        if prevSyllable is not curSyllable and len(util.possible_words) != 0:
-            prompt_word()
-            if auto_mode:
-                paste_word()
-            prevSyllable = curSyllable
+    # load the whole word list
+    util.load_word_list()
 
-print("Program quitted successfully!")
-exit()
+    # main loop
+    while not terminate:
+        if not lock.locked():
+            if prevSyllable is not curSyllable and len(util.possible_words) != 0:
+                prompt_word()
+                if auto_mode:
+                    paste_word()
+                prevSyllable = curSyllable
+
+    print("Program quitted successfully!")
+    exit()
