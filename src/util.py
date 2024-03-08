@@ -14,8 +14,11 @@ def find_word(syllable):
         if word.count(syllable) >= 1:
             possible_words.append(word)
 
-def get_word():
+def get_word(long_word_mode):
     global possible_words
+    if long_word_mode:
+        possible_words.sort(key=len)
+        return possible_words[-min(5, len(possible_words)):]
     return random.sample(possible_words, min(5, len(possible_words)))
 
 if __name__ == '__main__':
