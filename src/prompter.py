@@ -14,6 +14,9 @@ long_word_mode = False
 # --------------------------------------------------------------
 def read_syllable():
     global curSyllable
+    # attempt to lock the mouse position temporarily against minor movement to ensure accurate selection on the syllable
+    pyautogui.moveTo(pyautogui.position())
+
     pyautogui.doubleClick()
     pyautogui.hotkey('ctrl', 'c')
     curSyllable = pyperclip.paste().lower().strip()
