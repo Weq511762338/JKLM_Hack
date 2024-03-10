@@ -46,13 +46,13 @@ class MyFrame(wx.Frame):
         button_sizer.Add(auto_mode_button, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
         button_sizer.Add(long_word_button, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
 
-        # # Add button sizer to the main sizer
+        # Add button sizer to the main sizer
         main_sizer.Add(button_sizer, proportion=0, flag=wx.EXPAND | wx.ALL, border=10)
 
         panel.SetSizer(main_sizer)
         self.Center()
         
-        # # Bind toggle button events
+        # Bind toggle button events
         auto_mode_button.Bind(wx.EVT_TOGGLEBUTTON, self.on_toggle_button)
         long_word_button.Bind(wx.EVT_TOGGLEBUTTON, self.on_toggle_button)
         
@@ -63,7 +63,6 @@ class MyFrame(wx.Frame):
     def on_toggle_button(self, event):
         button = event.GetEventObject()
         print(f'{button.GetLabel()} toggled: {button.GetValue()}')
-        # You can perform actions based on which button is toggled here
 
         if button.GetLabel() == 'Auto Paste Mode':
             prompter.auto_paste_mode = not prompter.auto_paste_mode
@@ -102,6 +101,6 @@ def run():
 
 if __name__ == '__main__':
     app = wx.App()
-    frame = MyFrame(None, "Display Words in Rows (Static Display with Buttons)")
+    frame = MyFrame(None, "JKLM Prompter")
     frame.Show()
     app.MainLoop()
