@@ -10,7 +10,7 @@ prevSyllable = ''
 curSyllable = ''
 
 # modes
-auto_mode = False
+auto_paste_mode = False
 long_word_mode = False
 
 # --------------------------------------------------------------
@@ -27,15 +27,19 @@ def read_syllable():
     pyautogui.hotkey('tab')
     print(curSyllable)
     util.find_word(curSyllable)
+    return curSyllable
 
 def prompt_word():
-    global long_word_mode
+    global long_word_mode, auto_paste_mode
     words = util.get_word(long_word_mode)
     print(words)
 
     if len(words) != 0:
         # store the first word found to the clipboard so that user can directly paste
         pyperclip.copy(words[0])
+    
+    if auto_paste_mode:
+        paste_word()
 
     return words
 
@@ -63,7 +67,7 @@ if __name__ == '__main__':
     while not terminate:
         if prevSyllable is not curSyllable and len(util.possible_words) != 0:
             prompt_word()
-            if auto_mode:
+            if auto_paste_mode:
                 paste_word()
             prevSyllable = curSyllable
 
