@@ -6,7 +6,7 @@ class MyFrame(wx.Frame):
     def __init__(self, parent, title):
         super(MyFrame, self).__init__(parent, title=title, size=(300, 400), style=wx.DEFAULT_FRAME_STYLE | wx.STAY_ON_TOP)
 
-        self.SetIcon(wx.Icon('./img/prompter_icon.ico', wx.BITMAP_TYPE_ICO))
+        self.SetIcon(wx.Icon('./JKLM_Prompter/img/prompter_icon.ico', wx.BITMAP_TYPE_ICO))
 
         panel = wx.Panel(self)
         main_sizer = wx.BoxSizer(wx.VERTICAL)

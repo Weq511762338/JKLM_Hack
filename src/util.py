@@ -2,7 +2,7 @@ import random
 word_list = []
 possible_words = []
 def load_word_list():
-    with open('word_list.txt', 'r') as f:    
+    with open('./JKLM_Prompter/word_list.txt', 'r') as f:    
         global word_list
         word_list = f.read().split('\n')
         word_list = word_list[:-1]
